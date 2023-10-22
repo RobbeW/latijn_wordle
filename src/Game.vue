@@ -75,7 +75,7 @@ function completeRow() {
     const guess = currentRow.map((tile) => tile.letter).join('')
     if (!allWords.includes(guess) && guess !== answer) {
       shake()
-      showMessage(`Non in lexico`)
+      showMessage(`non in glossario`)
       return
     }
 
@@ -134,7 +134,7 @@ function completeRow() {
     }
   } else {
     shake()
-    showMessage('Non satis characteribus')
+    showMessage('litterae non sufficiunt')
   }
 }
 
