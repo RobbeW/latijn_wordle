@@ -179,13 +179,14 @@ function genResultGrid() {
     </div>
   </Transition>
   <header>
-    <h1>VVORDLE</h1>
+    <h1>LATIJNSE VVORDLE</h1>
     <a
       id="source-link"
-      href="https://github.com/yyx990803/vue-wordle"
+      href="https://github.com/RobbeW/latijn_wordle"
       target="_blank"
-      >Source</a
+      >Bron</a
     >
+    <p>Vragen, opmerkingen? <a href="www.robbewulgaert.be">Robbe Wulgaert</a>
   </header>
   <div id="board">
     <div
