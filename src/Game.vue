@@ -184,9 +184,8 @@ function genResultGrid() {
       id="source-link"
       href="https://github.com/RobbeW/latijn_wordle"
       target="_blank"
-      >Bron</a
-    >
-    <p>Vragen, opmerkingen? <a href="www.robbewulgaert.be">Robbe Wulgaert</a>
+      >Bron</a>
+    <p>Vragen, opmerkingen? <a href="www.robbewulgaert.be">Robbe Wulgaert</a></p>
   </header>
   <div id="board">
     <div
