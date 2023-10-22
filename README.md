@@ -1,9 +1,9 @@
-# Vue Wordle
+# Vue Latijnse Wordle
 
 [Live demo](https://vue-wordle.netlify.app/)
 
-A Vue implementation of the [Wordle game](https://www.powerlanguage.co.uk/wordle/). This is just for fun and doesn't aim to 100% replicate the original.
+Een Latijnse Vue-implementatie van het [Wordle-spel](https://www.powerlanguage.co.uk/wordle/). Dit is gewoon voor de lol en is niet bedoeld om het origineel 100% na te maken.
 
-You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. https://vue-wordle.netlify.app/?YmxpbXA= (this will also allow words that are not in the dictionary.)
+Je kunt je eigen Wordle maken en naar vrienden sturen door een woord te base64-encoderen en het als URL-query op te nemen, bijv. https://vue-wordle.netlify.app/?YmxpbXA= (dit laat ook woorden toe die niet in het woordenboek staan).
 
-This repository is open sourced for learning purposes only - the original creator(s) of Wordle own all applicable rights to the game itself.
+Dit archief is alleen open source voor leerdoeleinden - de originele maker(s) van Wordle bezitten alle toepasselijke rechten op het spel zelf.
