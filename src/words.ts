@@ -1,16 +1,16 @@
-const defaultMessage = ' Using word of the day instead.'
+const defaultMessage = ' We gebruiken het standaard woord-van-de-dag.'
 
 export function getWordOfTheDay() {
   if (location.search) {
     try {
       const query = atob(location.search.slice(1))
       if (query.length !== 5) {
-        alert(`Incorrect word length from encoded query. ${defaultMessage}`)
+        alert(`Incorrect aantal karakters in jouw gekozen woord. ${defaultMessage}`)
       } else {
         return query
       }
     } catch (e) {
-      alert(`Malformed encoded word query. ${defaultMessage}`)
+      alert(`Oei, foutje in de link. ${defaultMessage}`)
     }
   }
 
