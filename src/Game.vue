@@ -129,7 +129,7 @@ function completeRow() {
     } else {
       // game over :(
       setTimeout(() => {
-        showMessage('responsum emendatum',answer.toUpperCase(), -1)
+        showMessage('responsum emendatum ' + answer.toUpperCase(), -1)
       }, 1600)
     }
   } else {
