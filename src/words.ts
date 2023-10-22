@@ -46,6 +46,7 @@ const answers = [
   'remis',
   'rosis',
   'noxis',
+  'salve',
   'odiis',
   'minis',
   'fanis',
