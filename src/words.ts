@@ -24,7 +24,7 @@ export function getWordOfTheDay() {
   return answers[day]
 }
 
-// copied from Wordle source
+
 const answers = [
 'natis',
   'agnis',
@@ -3248,6 +3248,9 @@ const allowedGuesses = [
   'vendo',
   'place',
   'rideo',
+  'malus',
+  'bonus', 
+  'bonam',
 ]
 
 export const allWords = [...answers, ...allowedGuesses]
