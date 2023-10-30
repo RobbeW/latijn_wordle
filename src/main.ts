@@ -2,13 +2,13 @@ import { createApp } from 'vue'
 import Game from './Game.vue'
 import './game.css'
 
-// resize for scaling the board size
+// resize functie
 window.addEventListener('resize', onResize)
-// set size on startup
+// stel de afmetingen in bij opstarten
 onResize()
 
 function onResize() {
-  // get actual vh on mobile
+  // verkrijg de hoogte bij gebruik op smartphone
   document.body.style.setProperty('--vh', window.innerHeight + 'px')
 }
 
