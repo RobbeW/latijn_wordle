@@ -4,10 +4,10 @@ import { getWordOfTheDay, allWords } from './words'
 import Keyboard from './Keyboard.vue'
 import { LetterState } from './types'
 
-// Get word of the day
+// Krijg het woord van de dag: 
 const answer = getWordOfTheDay()
 
-// Board state. Each tile is represented as { letter, state }
+// Board state instellen: 
 const board = $ref(
   Array.from({ length: 6 }, () =>
     Array.from({ length: 5 }, () => ({
@@ -17,20 +17,20 @@ const board = $ref(
   )
 )
 
-// Current active row.
+
 let currentRowIndex = $ref(0)
 const currentRow = $computed(() => board[currentRowIndex])
 
-// Feedback state: message and shake
+
 let message = $ref('')
 let grid = $ref('')
 let shakeRowIndex = $ref(-1)
 let success = $ref(false)
 
-// Keep track of revealed letters for the virtual keyboard
+// Bijhouden van de letters op het toetsenbord
 const letterStates: Record<string, LetterState> = $ref({})
 
-// Handle keyboard input.
+// Keyboard input.
 let allowInput = true
 
 const onKeyup = (e: KeyboardEvent) => onKey(e.key)
@@ -113,7 +113,7 @@ function completeRow() {
       setTimeout(() => {
         grid = genResultGrid()
         showMessage(
-          ['Victoria!'][
+          'Victoria! ',[
             currentRowIndex
           ],
           -1
@@ -127,7 +127,7 @@ function completeRow() {
         allowInput = true
       }, 1600)
     } else {
-      // game over :(
+      // Perdis, finis ludi!
       setTimeout(() => {
         showMessage('responsum emendatum ' + answer.toUpperCase(), -1)
       }, 1600)
