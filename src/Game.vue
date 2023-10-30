@@ -116,10 +116,10 @@ function completeRow() {
           'Victoria! ',[
             currentRowIndex
           ],
-          3000
+          -1
         )
         success = true
-      }, 1600)
+      }, 3000)
     } else if (currentRowIndex < board.length - 1) {
       // go the next row
       currentRowIndex++
