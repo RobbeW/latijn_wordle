@@ -116,7 +116,7 @@ function completeRow() {
           'Victoria! ',[
             currentRowIndex
           ],
-          -1
+          3000
         )
         success = true
       }, 1600)
