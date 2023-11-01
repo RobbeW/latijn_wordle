@@ -169,6 +169,21 @@ function genResultGrid() {
     })
     .join('\n')
 }
+
+function promptForCustomWord() {
+  const customWord = window.prompt('Voer een Latijns woord in met vijf tekens:');
+  if (customWord && customWord.length === 5) {
+    const encodedWord = btoa(customWord.toLowerCase());
+    const newUrl = `http://latijnwordle.netlify.app/?${encodedWord}`;
+    navigator.clipboard.writeText(newUrl)
+      .then(() => showMessage('URL gekopieerd naar jouw klembord.'))
+      .catch(err => showMessage('Kopiëren van URL mislukt. Probeer het zelf.'));
+  } else {
+    showMessage('Voer een woord in met quinque karaters!');
+  }
+}
+
+
 </script>
 
 <template>
@@ -180,15 +195,22 @@ function genResultGrid() {
   </Transition>
   <header>
     <h1>LATIJNSE VVORDLE</h1>
-    <a
-      id="source-link"
-      href="https://github.com/RobbeW/latijn_wordle"
-      target="_blank"
-      >Bron</a>
-    <p>Vragen, opmerkingen? <a 
-                              href="https://www.robbewulgaert.be" 
-                              target="_blank"
-                              >Robbe Wulgaert</a></p>
+<template>
+  <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
+  <a
+    class="button"
+    id="source-link"
+    href="https://github.com/RobbeW/latijn_wordle"
+    target="_blank"
+  >Bron</a>
+  <p>Vragen, opmerkingen? <a 
+    class="button"
+    href="https://www.robbewulgaert.be" 
+    target="_blank"
+  >Robbe Wulgaert</a></p>
+</template>
+
+
   </header>
   <div id="board">
     <div
