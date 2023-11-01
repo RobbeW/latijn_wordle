@@ -195,7 +195,6 @@ function promptForCustomWord() {
   </Transition>
   <header>
     <h1>LATIJNSE VVORDLE</h1>
-<template>
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
   <a
     class="button"
@@ -208,7 +207,6 @@ function promptForCustomWord() {
     href="https://www.robbewulgaert.be" 
     target="_blank"
   >Robbe Wulgaert</a></p>
-</template>
 
 
   </header>
