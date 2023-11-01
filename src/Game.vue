@@ -197,7 +197,7 @@ function promptForCustomWord() {
     <h1>LATIJNSE VVORDLE</h1>
 
     <!--Knoppen bovenaan de pagina.-->
-  <div class="button-container">
+  <div id="button-container">
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
   <a
     class="button"
