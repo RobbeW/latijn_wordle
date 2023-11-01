@@ -200,11 +200,11 @@ function promptForCustomWord() {
   <div class="button-container">
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
     
-  <a
+  <!--<a
     class="button"
     href="https://github.com/RobbeW/latijn_wordle"
     target="_blank"
-  >Bron</a>
+  >Bron</a>-->
     
   <a 
     class="button"
