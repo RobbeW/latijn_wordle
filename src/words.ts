@@ -3252,6 +3252,7 @@ const allowedGuesses = [
   'bonus', 
   'bonam',
   'bonis',
+  'bonum',
 ]
 
 export const allWords = [...answers, ...allowedGuesses]
