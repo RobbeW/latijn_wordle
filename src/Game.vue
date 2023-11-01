@@ -197,7 +197,7 @@ function promptForCustomWord() {
     <h1>LATIJNSE VVORDLE</h1>
 
     <!--Knoppen bovenaan de pagina.-->
-  <div id="button-container">
+  <div class="button-container">
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
   <a
     class="button"
@@ -205,11 +205,11 @@ function promptForCustomWord() {
     href="https://github.com/RobbeW/latijn_wordle"
     target="_blank"
   >Bron</a>
-  <p><a 
+  <a 
     class="button"
     href="https://www.robbewulgaert.be" 
     target="_blank"
-  >Vragen, opmerkingen?</a></p>
+  >Vragen, opmerkingen?</a>
   </div>
 
 
