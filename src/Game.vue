@@ -271,6 +271,13 @@ function promptForCustomWord() {
   transition: opacity 0.9s ease-out;
   font-weight: 600;
 }
+
+@media (max-width: 768px) {  
+  .message {
+    top: 200px;  
+  }
+}
+
 .message.v-leave-to {
   opacity: 0;
 }
