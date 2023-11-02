@@ -1636,6 +1636,13 @@ const answers = [
   'vendo',
   'place',
   'rideo',
+  'malus',
+  'bonus', 
+  'bonam',
+  'bonis',
+  'bonum',
+  'penis',
+  'vacat',
 ]
 
 const allowedGuesses = [
@@ -3253,6 +3260,8 @@ const allowedGuesses = [
   'bonam',
   'bonis',
   'bonum',
+  'penis',
+  'vacat',
 ]
 
 export const allWords = [...answers, ...allowedGuesses]
