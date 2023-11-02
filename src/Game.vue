@@ -268,7 +268,7 @@ function promptForCustomWord() {
   z-index: 2;
   border-radius: 4px;
   transform: translateX(-50%);
-  transition: opacity 0.9s ease-out;
+  transition: opacity 3s ease-out;
   font-weight: 600;
 }
 
