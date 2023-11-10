@@ -191,7 +191,6 @@ function promptForCustomWord() {
   }
 }
 
-const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morph?l=${answer}&la=la`);
 
 </script>
 <!-- Roboto Font inladen -->
