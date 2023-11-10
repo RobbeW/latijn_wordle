@@ -17,7 +17,7 @@ const board = $ref(
   )
 )
 
-
+let gameFinished = $ref(false);
 let currentRowIndex = $ref(0)
 const currentRow = $computed(() => board[currentRowIndex])
 
@@ -72,12 +72,17 @@ function clearTile() {
 
 function completeRow() {
   if (currentRow.every((tile) => tile.letter)) {
-    const guess = currentRow.map((tile) => tile.letter).join('')
+    const guess = currentRow.map((tile) => tile.letter).join('');
     if (!allWords.includes(guess) && guess !== answer) {
-      shake()
-      showMessage(`non in glossario`)
-      return
+      shake();
+      showMessage(`non in glossario`);
+      return;
     }
+
+    if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
+      gameFinished = true;
+    }
+  }
 
     const answerLetters: (string | null)[] = answer.split('')
     // first pass: mark correct ones
@@ -183,6 +188,7 @@ function promptForCustomWord() {
   }
 }
 
+const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morph?l=${answer}&la=la`);
 
 </script>
 
@@ -198,14 +204,14 @@ function promptForCustomWord() {
 
     <!--Knoppen bovenaan de pagina.-->
   <div class="button-container">
+  
+  <!-- knop 1 -->
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
-    
-  <!--<a
-    class="button"
-    href="https://github.com/RobbeW/latijn_wordle"
-    target="_blank"
-  >Bron</a>-->
-    
+  
+  <!-- knop 2 -->
+  <a :href="dictionaryUrl" :class="{ 'button-disabled': !gameFinished }" class="button" target="_blank">Zoek het woord op!</a>
+  
+  <!-- knop 3 -->
   <a 
     class="button"
     href="https://www.robbewulgaert.be" 
