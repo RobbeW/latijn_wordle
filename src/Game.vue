@@ -7,6 +7,9 @@ import { LetterState } from './types'
 // Krijg het woord van de dag: 
 const answer = getWordOfTheDay()
 
+// Koppel het woord van de dag aan de URL voor de woordenboekfunctie:
+const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morph?l=${answer}&la=la`);
+  
 // Board state instellen: 
 const board = $ref(
   Array.from({ length: 6 }, () =>
