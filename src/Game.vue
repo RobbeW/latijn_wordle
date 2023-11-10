@@ -194,6 +194,8 @@ function promptForCustomWord() {
 const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morph?l=${answer}&la=la`);
 
 </script>
+<!-- Roboto Font inladen -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 <template>
   <Transition>
@@ -212,7 +214,7 @@ const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morp
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
   
   <!-- knop 2 -->
-  <a :href="dictionaryUrl" :class="{ 'button-disabled': !gameFinished }" class="button" target="_blank">Zoek het woord op!</a>
+  <!--<a :href="dictionaryUrl" :class="{ 'button-disabled': !gameFinished }" class="button" target="_blank">Zoek het woord op!</a>-->
   
   <!-- knop 3 -->
   <a 
