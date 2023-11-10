@@ -212,7 +212,7 @@ const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morp
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
   
   <!-- knop 2 -->
-  <a :href="dictionaryUrl" class="button" target="_blank">Zoek het woord op!</a>
+ <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
   
   <!-- knop 3 -->
   <a 
