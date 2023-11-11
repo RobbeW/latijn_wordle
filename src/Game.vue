@@ -233,8 +233,8 @@ function promptForCustomWord() {
   <div class="button-container">
   
   <!-- knop 1 -->
-  <button @click="openModal">Stel een eigen woord in!</button>
-  
+  <button class="button" @click="openModal">Stel een eigen woord in!</button>
+
   <!-- knop 2 -->
    <a :href="dictionaryUrl"
    :class="{'button-disabled': !gameFinished, 'button': gameFinished}"
