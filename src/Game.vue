@@ -82,69 +82,55 @@ function completeRow() {
       return;
     }
 
-    if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
-      gameFinished = true;
-    }
-  }
-
-    const answerLetters: (string | null)[] = answer.split('')
-    // first pass: mark correct ones
+    // Marking the state of each tile in the current row
+    const answerLetters = answer.split('');
+    // First pass: mark correct ones
     currentRow.forEach((tile, i) => {
       if (answerLetters[i] === tile.letter) {
-        tile.state = letterStates[tile.letter] = LetterState.CORRECT
-        answerLetters[i] = null
+        tile.state = letterStates[tile.letter] = LetterState.CORRECT;
+        answerLetters[i] = null;
       }
-    })
-    // second pass: mark the present
+    });
+    // Second pass: mark present ones
     currentRow.forEach((tile) => {
-      if (!tile.state && answerLetters.includes(tile.letter)) {
-        tile.state = LetterState.PRESENT
-        answerLetters[answerLetters.indexOf(tile.letter)] = null
-        if (!letterStates[tile.letter]) {
-          letterStates[tile.letter] = LetterState.PRESENT
-        }
+      if (tile.state !== LetterState.CORRECT && answerLetters.includes(tile.letter)) {
+        tile.state = letterStates[tile.letter] = LetterState.PRESENT;
+        answerLetters[answerLetters.indexOf(tile.letter)] = null;
       }
-    })
-    // 3rd pass: mark absent
+    });
+    // Third pass: mark absent ones
     currentRow.forEach((tile) => {
       if (!tile.state) {
-        tile.state = LetterState.ABSENT
-        if (!letterStates[tile.letter]) {
-          letterStates[tile.letter] = LetterState.ABSENT
-        }
+        tile.state = letterStates[tile.letter] = LetterState.ABSENT;
       }
-    })
+    });
 
-    allowInput = false
+    // Check if the row is entirely correct
     if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
-      // yay!
       setTimeout(() => {
-        grid = genResultGrid()
-        showMessage(
-          'Victoria! ',[
-            currentRowIndex
-          ],
-          -1
-        )
-        success = true
-      }, 3000)
+        grid = genResultGrid();
+        showMessage('Victoria! ', -1);
+        success = true;
+        gameFinished = true; // Set game to finished state
+      }, 3000);
     } else if (currentRowIndex < board.length - 1) {
-      // go the next row
-      currentRowIndex++
+      // Move to the next row
+      currentRowIndex++;
       setTimeout(() => {
-        allowInput = true
-      }, 1600)
+        allowInput = true;
+      }, 1600);
     } else {
-      // Perdis, finis ludi!
+      // Game over logic
       setTimeout(() => {
-        showMessage('responsum emendatum ' + answer.toUpperCase(), -1)
-      }, 1600)
+        showMessage('responsum emendatum ' + answer.toUpperCase(), -1);
+      }, 1600);
     }
   } else {
-    shake()
-    showMessage('litterae non sufficiunt')
+    shake();
+    showMessage('litterae non sufficiunt');
   }
 }
+
 
 function showMessage(msg: string, time = 1000) {
   message = msg
