@@ -169,13 +169,22 @@ function promptForCustomWord() {
   if (customWord && customWord.length === 5) {
     const encodedWord = btoa(customWord.toLowerCase());
     const newUrl = `http://latijnwordle.netlify.app/?${encodedWord}`;
-    navigator.clipboard.writeText(newUrl)
-      .then(() => showMessage('URL gekopieerd naar jouw klembord.'))
-      .catch(err => showMessage('Kopiëren van URL mislukt. Probeer het zelf.'));
+    // Sla de URL op in een state of data-eigenschap in plaats van direct te proberen te kopiëren
+    this.generatedUrl = newUrl;
+    // Geef aan de gebruiker aan dat ze op een knop moeten klikken om de URL te kopiëren
+    showMessage('Klik op de knop om de URL te kopiëren.');
   } else {
     showMessage('Voer een woord in met quinque karaters!');
   }
 }
+
+// Vervolgens, heb een aparte methode en knop voor het kopiëren van de URL
+function copyUrlToClipboard() {
+  navigator.clipboard.writeText(this.generatedUrl)
+    .then(() => showMessage('URL gekopieerd naar jouw klembord.'))
+    .catch(err => showMessage('Kopiëren van URL mislukt. Probeer het zelf.'));
+}
+
 
 
 </script>
