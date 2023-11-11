@@ -208,14 +208,6 @@ function promptForCustomWord() {
   }
 }
 
-// Vervolgens, heb een aparte methode en knop voor het kopiëren van de URL
-function copyUrlToClipboard() {
-  navigator.clipboard.writeText(this.generatedUrl)
-    .then(() => showMessage('URL gekopieerd naar jouw klembord.'))
-    .catch(err => showMessage('Kopiëren van URL mislukt. Probeer het zelf.'));
-}
-
-
 
 </script>
 <!-- Roboto Font inladen -->
