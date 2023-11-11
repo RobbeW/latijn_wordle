@@ -214,12 +214,12 @@ function promptForCustomWord() {
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
 
 <template>
-   <div v-if="isModalVisible" class="custom-modal">
-    <input v-model="customWord" type="text" placeholder="Voer een Latijns woord in met vijf tekens">
-    <button @click="generateUrl">Genereer URL</button>
-    <button @click="copyUrlToClipboard">Kopieer URL</button>
-    <button @click="closeModal">Sluit</button>
-  </div>
+<div v-if="isModalVisible" class="custom-modal">
+  <input v-model="customWord" type="text" placeholder="Voer een Latijns woord in met vijf tekens">
+  <button class="button" @click="generateUrl">Genereer URL</button>
+  <button class="button" @click="copyUrlToClipboard">Kopieer URL</button>
+  <button class="button" @click="closeModal">Sluit</button>
+</div>
   <Transition>
     <div class="message" v-if="message">
       {{ message }}
@@ -455,6 +455,21 @@ function promptForCustomWord() {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
+}
+.custom-modal .button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #5200ff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 9px #999;
 }
 
 
