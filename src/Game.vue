@@ -1,8 +1,38 @@
 <script setup lang="ts">
-import { onUnmounted } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { getWordOfTheDay, allWords } from './words'
 import Keyboard from './Keyboard.vue'
 import { LetterState } from './types'
+
+
+// Code voor de model en de copy van custom word of the day: 
+let isModalVisible = ref(false);
+let customWord = ref('');
+let generatedUrl = ref('');
+
+function openModal() {
+  isModalVisible.value = true;
+}
+
+function closeModal() {
+  isModalVisible.value = false;
+}
+
+function generateUrl() {
+  if (customWord.value && customWord.value.length === 5) {
+    const encodedWord = btoa(customWord.value.toLowerCase());
+    generatedUrl.value = `http://latijnwordle.netlify.app/?${encodedWord}`;
+    showMessage('URL gereed om te kopiëren.');
+  } else {
+    showMessage('Voer een woord in met quinque karaters!');
+  }
+}
+
+function copyUrlToClipboard() {
+  navigator.clipboard.writeText(generatedUrl.value)
+    .then(() => showMessage('URL gekopieerd naar jouw klembord.'))
+    .catch(err => showMessage('Kopiëren van URL mislukt. Probeer het zelf.'));
+}
 
 // Krijg het woord van de dag: 
 const answer = getWordOfTheDay()
@@ -192,6 +222,12 @@ function copyUrlToClipboard() {
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
 
 <template>
+   <div v-if="isModalVisible" class="custom-modal">
+    <input v-model="customWord" type="text" placeholder="Voer een Latijns woord in met vijf tekens">
+    <button @click="generateUrl">Genereer URL</button>
+    <button @click="copyUrlToClipboard">Kopieer URL</button>
+    <button @click="closeModal">Sluit</button>
+  </div>
   <Transition>
     <div class="message" v-if="message">
       {{ message }}
@@ -201,11 +237,11 @@ function copyUrlToClipboard() {
   <header>
     <h1>LATIJNSE VVORDLE</h1>
 
-    <!--Knoppen bovenaan de pagina.-->
+  <!--Knoppen bovenaan de pagina.-->
   <div class="button-container">
   
   <!-- knop 1 -->
-  <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
+  <button @click="openModal">Stel een eigen woord in!</button>
   
   <!-- knop 2 -->
    <a :href="dictionaryUrl"
@@ -416,4 +452,18 @@ function copyUrlToClipboard() {
     font-size: 3vh;
   }
 }
+
+.custom-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+
 </style>
