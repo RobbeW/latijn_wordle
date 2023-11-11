@@ -139,7 +139,7 @@ function completeRow() {
     if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
       setTimeout(() => {
         grid = genResultGrid();
-        showMessage('Victoria! ', -1);
+        showMessage('Victoria!', 3000);
         success = true;
         gameFinished = true; // Set game to finished state
       }, 3000);
