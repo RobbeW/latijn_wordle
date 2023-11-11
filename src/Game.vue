@@ -199,11 +199,12 @@ function promptForCustomWord() {
   <button class="button" @click="promptForCustomWord">Stel een eigen woord in!</button>
   
   <!-- knop 2 -->
-  <a :href="dictionaryUrl"
+   <a :href="dictionaryUrl"
    :class="{'button-disabled': !gameFinished, 'button': gameFinished}"
-   :disabled="!gameFinished"
+   @click="gameFinished ? null : $event.preventDefault()"
    class="button"
    target="_blank">Zoek het woord op!</a>
+
   
   <!-- knop 3 -->
   <a 
