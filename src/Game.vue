@@ -141,7 +141,7 @@ function completeRow() {
         grid = genResultGrid();
         showMessage('Victoria!', 3000);
         success = true;
-        gameFinished = true; // Set game to finished state
+        gameFinished = true; // Game is uigesteld, verander variabelen. 
       }, 3000);
     } else if (currentRowIndex < board.length - 1) {
       // Move to the next row
@@ -152,7 +152,7 @@ function completeRow() {
     } else {
       // Game over logic
       setTimeout(() => {
-        showMessage('responsum emendatum ' + answer.toUpperCase(), -1);
+        showMessage('responsum emendatum ' + answer.toUpperCase(), 3000);
       }, 1600);
     }
   } else {
