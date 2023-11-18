@@ -1,5 +1,15 @@
 const defaultMessage = ' We gebruiken het standaard woord-van-de-dag.'
 
+function seedRandom(seed) {
+  var m = 0x80000000,
+      a = 1103515245,
+      c = 12345;
+  return function() {
+    seed = (a * seed + c) % m;
+    return seed / (m - 1);
+  };
+}
+
 export function getWordOfTheDay() {
   if (location.search) {
     try {
@@ -14,14 +24,11 @@ export function getWordOfTheDay() {
     }
   }
 
-  const now = new Date()
-  const start = new Date(2022, 0, 0)
-  const diff = Number(now) - Number(start)
-  let day = Math.floor(diff / (1000 * 60 * 60 * 24))
-  while (day > answers.length) {
-    day -= answers.length
-  }
-  return answers[day]
+  const now = new Date();
+  const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+  const random = seedRandom(seed);
+  const randomIndex = Math.floor(random() * answers.length);
+  return answers[randomIndex];
 }
 
 
