@@ -140,7 +140,7 @@ function completeRow() {
         showMessage('Victoria!', 3000);
         success = true;
         gameFinished = true; // Game is uigesteld, verander variabelen.
-        copyResultToClipboard(); // Kopieer het resultaat naar klembord
+        // Kopieer het resultaat naar klembord niet nodig
       }, 3000);
     } else if (currentRowIndex < board.length - 1) {
       // Ga naar de volgende rij
@@ -204,7 +204,7 @@ function generateShareableResult() {
     .map(row => row.map(tile => icons[tile.state]).join(''))
     .join('\n');
 
-  return `${title}\n\n${grid}`;
+  return `${title}\n\n${grid} // Probeer zelf op latijnwordle.netlify.app`;
 }
 
 // Functie om resultaat naar klembord te kopiëren
@@ -262,16 +262,20 @@ function promptForCustomWord() {
    class="button"
    target="_blank">Zoek het woord op!</a>
 
-  
   <!-- knop 3 -->
   <a 
     class="button"
     href="https://www.robbewulgaert.be" 
     target="_blank"
   >Vragen, opmerkingen?</a>
+
+  <!-- knop 4: Deel Resultaat -->
+  <button
+    class="button"
+    :class="{'button-disabled': !gameFinished, 'button': gameFinished}"
+    @click="gameFinished ? copyResultToClipboard() : null"
+  >Deel Resultaat</button>
   </div>
-
-
   </header>
   <div id="board">
     <div
@@ -302,8 +306,6 @@ function promptForCustomWord() {
     </div>
   </div>
   <Keyboard @key="onKey" :letter-states="letterStates" />
-  <!-- Deel resultaat knop -->
-  <button class="button" @click="copyResultToClipboard">Deel Resultaat</button>
 </template>
 
 <style scoped>
@@ -417,7 +419,7 @@ function promptForCustomWord() {
     transform: translate(-2px);
   }
   40% {
-    transform: 2px;
+    transform: translate(2px);
   }
   50% {
     transform: translate(-2px);
@@ -492,6 +494,11 @@ function promptForCustomWord() {
   border: none;
   border-radius: 5px;
   box-shadow: 0 9px #999;
+}
+
+.button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 </style>
