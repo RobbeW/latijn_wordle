@@ -4,8 +4,7 @@ import { getWordOfTheDay, allWords } from './words'
 import Keyboard from './Keyboard.vue'
 import { LetterState } from './types'
 
-
-// Code voor de model en de copy van custom word of the day: 
+// Code voor de modal en de copy van custom word of the day:
 let isModalVisible = ref(false);
 let customWord = ref('');
 let generatedUrl = ref('');
@@ -24,7 +23,7 @@ function generateUrl() {
     generatedUrl.value = `http://latijnwordle.netlify.app/?${encodedWord}`;
     showMessage('URL gereed om te kopiëren.');
   } else {
-    showMessage('Voer een woord in met quinque karaters!');
+    showMessage('Voer een woord in met vijf karakters!');
   }
 }
 
@@ -34,13 +33,13 @@ function copyUrlToClipboard() {
     .catch(err => showMessage('Kopiëren van URL mislukt. Probeer het zelf.'));
 }
 
-// Krijg het woord van de dag: 
+// Krijg het woord van de dag:
 const answer = getWordOfTheDay()
 
 // Koppel het woord van de dag aan de URL voor de woordenboekfunctie:
 const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morph?l=${answer}&la=la`);
   
-// Board state instellen: 
+// Board state instellen:
 const board = $ref(
   Array.from({ length: 6 }, () =>
     Array.from({ length: 5 }, () => ({
@@ -53,7 +52,6 @@ const board = $ref(
 let gameFinished = $ref(false);
 let currentRowIndex = $ref(0)
 const currentRow = $computed(() => board[currentRowIndex])
-
 
 let message = $ref('')
 let grid = $ref('')
@@ -108,49 +106,50 @@ function completeRow() {
     const guess = currentRow.map((tile) => tile.letter).join('');
     if (!allWords.includes(guess) && guess !== answer) {
       shake();
-      showMessage(`non in glossario`);
+      showMessage('non in glossario');
       return;
     }
 
-    // Marking the state of each tile in the current row
+    // Markeer de staat van elke tile in de huidige rij
     const answerLetters = answer.split('');
-    // First pass: mark correct ones
+    // Eerste pass: markeer correcte letters
     currentRow.forEach((tile, i) => {
       if (answerLetters[i] === tile.letter) {
         tile.state = letterStates[tile.letter] = LetterState.CORRECT;
         answerLetters[i] = null;
       }
     });
-    // Second pass: mark present ones
+    // Tweede pass: markeer aanwezige letters
     currentRow.forEach((tile) => {
       if (tile.state !== LetterState.CORRECT && answerLetters.includes(tile.letter)) {
         tile.state = letterStates[tile.letter] = LetterState.PRESENT;
         answerLetters[answerLetters.indexOf(tile.letter)] = null;
       }
     });
-    // Third pass: mark absent ones
+    // Derde pass: markeer afwezige letters
     currentRow.forEach((tile) => {
       if (!tile.state) {
         tile.state = letterStates[tile.letter] = LetterState.ABSENT;
       }
     });
 
-    // Check if the row is entirely correct
+    // Controleer of de rij volledig correct is
     if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
       setTimeout(() => {
         grid = genResultGrid();
         showMessage('Victoria!', 3000);
         success = true;
-        gameFinished = true; // Game is uigesteld, verander variabelen. 
+        gameFinished = true; // Game is uigesteld, verander variabelen.
+        copyResultToClipboard(); // Kopieer het resultaat naar klembord
       }, 3000);
     } else if (currentRowIndex < board.length - 1) {
-      // Move to the next row
+      // Ga naar de volgende rij
       currentRowIndex++;
       setTimeout(() => {
         allowInput = true;
       }, 1600);
     } else {
-      // Game over logic
+      // Game over logica
       setTimeout(() => {
         showMessage('responsum emendatum ' + answer.toUpperCase(), 3000);
       }, 1600);
@@ -161,7 +160,7 @@ function completeRow() {
   }
 }
 
-
+// Functie om bericht weer te geven
 function showMessage(msg: string, time = 1000) {
   message = msg
   if (time > 0) {
@@ -171,6 +170,7 @@ function showMessage(msg: string, time = 1000) {
   }
 }
 
+// Functie om de rij te schudden
 function shake() {
   shakeRowIndex = currentRowIndex
   setTimeout(() => {
@@ -178,6 +178,7 @@ function shake() {
   }, 1000)
 }
 
+// Emoji-iconen voor de verschillende staten
 const icons = {
   [LetterState.CORRECT]: '🟩',
   [LetterState.PRESENT]: '🟨',
@@ -185,6 +186,7 @@ const icons = {
   [LetterState.INITIAL]: null
 }
 
+// Genereer resultaatgrid voor delen
 function genResultGrid() {
   return board
     .slice(0, currentRowIndex + 1)
@@ -192,6 +194,25 @@ function genResultGrid() {
       return row.map((tile) => icons[tile.state]).join('')
     })
     .join('\n')
+}
+
+// Functie om deelbaar resultaat te genereren
+function generateShareableResult() {
+  const title = `LATIJNSE VVORDLE ${currentRowIndex + 1}/6`;
+  const grid = board
+    .slice(0, currentRowIndex + 1)
+    .map(row => row.map(tile => icons[tile.state]).join(''))
+    .join('\n');
+
+  return `${title}\n\n${grid}`;
+}
+
+// Functie om resultaat naar klembord te kopiëren
+function copyResultToClipboard() {
+  const result = generateShareableResult();
+  navigator.clipboard.writeText(result)
+    .then(() => showMessage('Resultaat gekopieerd naar klembord!'))
+    .catch(err => showMessage('Kopiëren van resultaat mislukt. Probeer het zelf.'));
 }
 
 function promptForCustomWord() {
@@ -204,10 +225,9 @@ function promptForCustomWord() {
     // Geef aan de gebruiker aan dat ze op een knop moeten klikken om de URL te kopiëren
     showMessage('Klik op de knop om de URL te kopiëren.');
   } else {
-    showMessage('Voer een woord in met quinque karaters!');
+    showMessage('Voer een woord in met vijf karakters!');
   }
 }
-
 
 </script>
 <!-- Roboto Font inladen -->
@@ -282,6 +302,8 @@ function promptForCustomWord() {
     </div>
   </div>
   <Keyboard @key="onKey" :letter-states="letterStates" />
+  <!-- Deel resultaat knop -->
+  <button class="button" @click="copyResultToClipboard">Deel Resultaat</button>
 </template>
 
 <style scoped>
@@ -395,7 +417,7 @@ function promptForCustomWord() {
     transform: translate(-2px);
   }
   40% {
-    transform: translate(2px);
+    transform: 2px;
   }
   50% {
     transform: translate(-2px);
@@ -471,6 +493,5 @@ function promptForCustomWord() {
   border-radius: 5px;
   box-shadow: 0 9px #999;
 }
-
 
 </style>
