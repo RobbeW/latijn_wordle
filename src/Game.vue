@@ -50,6 +50,7 @@ const board = $ref(
 )
 
 let gameFinished = $ref(false);
+let gameWin = $ref(false);
 let currentRowIndex = $ref(0)
 const currentRow = $computed(() => board[currentRowIndex])
 
@@ -139,6 +140,7 @@ function completeRow() {
         grid = genResultGrid();
         showMessage('Victoria!', 3000);
         success = true;
+        gameWin = true;
         gameFinished = true; // Game is uigesteld, verander variabelen.
         // Kopieer het resultaat naar klembord niet nodig
       }, 3000);
@@ -273,7 +275,7 @@ function promptForCustomWord() {
   <!-- knop 4: Deel Resultaat -->
   <button
     class="button"
-    :class="{'button-disabled': !gameFinished, 'button': gameFinished}"
+    :class="{'button-disabled': !gameFinished, 'button': gameFinished && gameWin}"
     @click="gameFinished ? copyResultToClipboard() : null"
   >Deel Resultaat</button>
   </div>
