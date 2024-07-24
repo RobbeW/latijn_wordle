@@ -273,11 +273,11 @@ function promptForCustomWord() {
   >Vragen, opmerkingen?</a>
 
   <!-- knop 4: Deel Resultaat -->
-  <button
-    class="button"
-    :class="{'button-disabled': !gameFinished, 'button': gameFinished && gameWin}"
-    @click="gameFinished ? copyResultToClipboard() : null"
-  >Deel Resultaat</button>
+<button
+  class="button"
+  :class="{'button-disabled': !gameFinished || !gameWin, 'button': gameFinished && gameWin}"
+  @click="gameFinished && gameWin ? copyResultToClipboard() : null"
+>Deel Resultaat</button>
   </div>
   </header>
   <div id="board">
