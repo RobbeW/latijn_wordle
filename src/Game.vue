@@ -150,6 +150,7 @@ function completeRow() {
       }, 1600);
     } else {
       // Game over logica
+      gameFinished = true;
       setTimeout(() => {
         showMessage('responsum emendatum ' + answer.toUpperCase(), 3000);
       }, 1600);
