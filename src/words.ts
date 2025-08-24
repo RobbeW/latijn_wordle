@@ -34,6 +34,7 @@ export function getWordOfTheDay() {
 
 const answers = [
 'natis',
+  'lacum',
   'agnis',
   'letis',
   'lupis',
