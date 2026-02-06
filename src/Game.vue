@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
-import { getWordOfTheDay, allWords } from './words'
+import { getWordOfTheDay, allWords, encodeBase64Unicode, normalizeGreekWord } from './words'
 import Keyboard from './Keyboard.vue'
 import { LetterState } from './types'
 
@@ -18,8 +18,9 @@ function closeModal() {
 }
 
 function generateUrl() {
-  if (customWord.value && customWord.value.length === 5) {
-    const encodedWord = btoa(customWord.value.toLowerCase());
+  const normalizedWord = normalizeGreekWord(customWord.value);
+  if (normalizedWord && normalizedWord.length === 5) {
+    const encodedWord = encodeBase64Unicode(normalizedWord);
     generatedUrl.value = `http://latijnwordle.netlify.app/?${encodedWord}`;
     showMessage('URL gereed om te kopiëren.');
   } else {
@@ -37,7 +38,7 @@ function copyUrlToClipboard() {
 const answer = getWordOfTheDay()
 
 // Koppel het woord van de dag aan de URL voor de woordenboekfunctie:
-const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morph?l=${answer}&la=la`);
+const dictionaryUrl = $computed(() => `https://www.perseus.tufts.edu/hopper/morph?l=${answer}&la=grc`);
   
 // Board state instellen:
 const board = $ref(
@@ -75,8 +76,9 @@ onUnmounted(() => {
 
 function onKey(key: string) {
   if (!allowInput) return
-  if (/^[a-zA-Z]$/.test(key)) {
-    fillTile(key.toLowerCase())
+  const normalizedKey = normalizeGreekWord(key)
+  if (/^\p{Script=Greek}$/u.test(normalizedKey)) {
+    fillTile(normalizedKey)
   } else if (key === 'Backspace') {
     clearTile()
   } else if (key === 'Enter') {
@@ -107,7 +109,7 @@ function completeRow() {
     const guess = currentRow.map((tile) => tile.letter).join('');
     if (!allWords.includes(guess) && guess !== answer) {
       shake();
-      showMessage('non in glossario');
+      showMessage('Niet in woordenlijst.');
       return;
     }
 
@@ -138,7 +140,7 @@ function completeRow() {
     if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
       setTimeout(() => {
         grid = genResultGrid();
-        showMessage('Victoria!', 3000);
+        showMessage('Gewonnen!', 3000);
         success = true;
         gameWin = true;
         gameFinished = true; // Game is uigesteld, verander variabelen.
@@ -154,12 +156,12 @@ function completeRow() {
       // Game over logica
       gameFinished = true;
       setTimeout(() => {
-        showMessage('responsum emendatum ' + answer.toUpperCase(), 3000);
+        showMessage('Juiste antwoord: ' + answer.toUpperCase(), 3000);
       }, 1600);
     }
   } else {
     shake();
-    showMessage('litterae non sufficiunt');
+    showMessage('Onvoldoende letters.');
   }
 }
 
@@ -201,7 +203,7 @@ function genResultGrid() {
 
 // Functie om deelbaar resultaat te genereren
 function generateShareableResult() {
-  const title = `LATIJNSE VVORDLE ${currentRowIndex + 1}/6`;
+  const title = `GRIEKSE WORDLE ${currentRowIndex + 1}/6`;
   const grid = board
     .slice(0, currentRowIndex + 1)
     .map(row => row.map(tile => icons[tile.state]).join(''))
@@ -219,9 +221,10 @@ function copyResultToClipboard() {
 }
 
 function promptForCustomWord() {
-  const customWord = window.prompt('Voer een Latijns woord in met vijf tekens:');
-  if (customWord && customWord.length === 5) {
-    const encodedWord = btoa(customWord.toLowerCase());
+  const customWord = window.prompt('Voer een Grieks woord in met vijf tekens:');
+  const normalizedWord = normalizeGreekWord(customWord ?? '');
+  if (normalizedWord && normalizedWord.length === 5) {
+    const encodedWord = encodeBase64Unicode(normalizedWord);
     const newUrl = `http://latijnwordle.netlify.app/?${encodedWord}`;
     // Sla de URL op in een state of data-eigenschap in plaats van direct te proberen te kopiëren
     this.generatedUrl = newUrl;
@@ -238,7 +241,7 @@ function promptForCustomWord() {
 
 <template>
 <div v-if="isModalVisible" class="custom-modal">
-  <input v-model="customWord" type="text" placeholder="Voer een Latijns woord in met vijf tekens">
+  <input v-model="customWord" type="text" placeholder="Voer een Grieks woord in met vijf tekens">
   <button class="button" @click="generateUrl">Genereer URL</button>
   <button class="button" @click="copyUrlToClipboard">Kopieer URL</button>
   <button class="button" @click="closeModal">Sluit</button>
@@ -250,7 +253,7 @@ function promptForCustomWord() {
     </div>
   </Transition>
   <header>
-    <h1>LATIJNSE VVORDLE</h1>
+    <h1>GRIEKSE WORDLE</h1>
 
   <!--Knoppen bovenaan de pagina.-->
   <div class="button-container">
